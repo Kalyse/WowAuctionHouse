@@ -1,0 +1,10 @@
+active_standards=TLSniff
+custom_standard_names=PHPHH;TLSniff
+custom_standard_paths=/home/lamy/www/PHPHH;/home/lamy/www/TLSniff
+debug_print_output=true
+default_tab_width=0
+eclipse.preferences.version=1
+file_extension=
+ignore_pattern=
+php_executable=PHP 5.4.0 (CLI)
+pref_ignore_sniffs=

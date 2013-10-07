@@ -1,0 +1,12 @@
+<tr>
+	<td><a href="{{ row.link | raw }}">{{ row.name }}</a></td>
+	<td><a href="?do=item|statistics&amp;item={{row.itemid}}&amp;region={{row.region}}&amp;realm={{row.realm}}&amp;house={{row.house}}">{{ row.Volume }}</a></td>
+	<td class="umsatz preis">{{ "%0.0f" |format(row.Umsatz/10000) }}</td>
+	<td class="minp preis">{{ "%0.2f" |format(row.MinPreis/10000) }}</td>
+	<td class="maxp preis">{{ "%0.2f" |format(row.MaxPreis/10000) }}</td>
+	<td class="durchp preis">{{ "%0.2f" |format(row.Schnitt/10000) }}</td>
+	<td class="stddev preis">{{ "%0.2f" |format(row.Stdev/10000) }}</td>
+	<td class="region">{{ row.region | upper }}</td>
+	<td class="realm">{{ row.realm | capitalize }}</td>
+	<td class="auchouse">{{ row.house | capitalize }}</td>
+</tr>
