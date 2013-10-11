@@ -1,0 +1,8 @@
+dbname=wow
+dbuser=root
+dbpass=fun4free
+dbhost=127.0.0.1
+
+[debug]
+view=debug
+mvc=debug
