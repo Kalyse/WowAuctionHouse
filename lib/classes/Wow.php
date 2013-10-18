@@ -1,9 +1,10 @@
 <?php
 /**
- * @author TLamy
+ * Blizzard battle.net configuration
  *
+ * @todo rename class
+ * @author TLamy
  */
-
 class Wow
 {
 	const REGION_EU = 'eu';
@@ -16,9 +17,9 @@ class Wow
 
 	public function getBnetHostname( $region)
 	{
-		if( array_key_exists($region, static::$_bnetConfig)) {
-			return static::$_bnetConfig[$region]['host'];
+		if( !array_key_exists($region, static::$_bnetConfig)) {
+			throw new Exception("Region not found or not configured");
 		}
-		throw new Exception("Region not found or not configured");
+		return static::$_bnetConfig[$region]['host'];
 	}
 }

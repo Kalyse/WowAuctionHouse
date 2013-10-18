@@ -1,4 +1,7 @@
 <?php
+/**
+ * Manage HHTP request data
+ */
 class Request_Http
 		extends Request_Abstract
 {
@@ -8,7 +11,10 @@ class Request_Http
 	protected $cookieVars = array();
 	protected $fileVars = array();
 
-	public function init( $requestData)
+	/**
+	 * @see Request_Abstract::init()
+	 */
+	public function init()
 	{
 		$this->vars = $_REQUEST;
 		$this->getVars = array_keys($_GET);

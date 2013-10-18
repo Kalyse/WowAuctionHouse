@@ -3,16 +3,17 @@
 require_once ('lib/classes/DB/Item.php');
 
 /**
- * @author lamy
+ * Auctions.item
  *
+ * @author lamy
  */
 class Item extends DB_Item
 {
 
 	/**
-   *
-	*/
-	function __construct(DBInterface $db)
+	 *
+	 */
+	public function __construct(DBInterface $db)
 	{
 		parent::__construct($db);
 	}

@@ -3,9 +3,9 @@
 require_once ('lib/Interfaces/DBInterface.php');
 
 /**
+ * Simple PDO Wrapper
  *
  * @author TLamy
- *
  */
 class DB
 		extends PDO
@@ -14,7 +14,7 @@ class DB
 	/**
 	 * @var LoggerInterface
 	 */
-	protected $_Logger;
+	protected $logger;
 	/*
 	static private $_instance = null;
 
@@ -38,9 +38,9 @@ class DB
 		$this->exec("SET names utf8");
 	}
 
-	public function registerLogger( LoggerInterface $Logger)
+	public function registerLogger( LoggerInterface $logger)
 	{
-		$this->_Logger = $Logger;
+		$this->logger = $logger;
 	}
 
 	public function bindObject( PDOStatement $stmt, stdClass $object)
@@ -67,20 +67,25 @@ class DB
 
 	public function exec($statement)
 	{
-		if( $this->_Logger) {
-			$this->_Logger->debug("Exec: ".$statement);
+		if( $this->logger) {
+			$this->logger->debug("Exec: ".$statement);
 		}
 		return parent::exec($statement);
 	}
 
 	public function query($statement)
 	{
-		if( $this->_Logger) {
-			$this->_Logger->debug("Query: ".$statement);
+		if( $this->logger) {
+			$this->logger->debug("Query: ".$statement);
 		}
+		$startTime = microtime(true);
 		$result = parent::query($statement);
 		if( !$result) {
 			throw new Exception("Error: ".$this->errorInfo()."\n".$statement);
+		} else {
+			if( $this->logger) {
+				$this->logger->debug(sprintf("Query took %0.f ms", (microtime(true)-$startTime)*1000));
+			}
 		}
 		return $result;
 	}

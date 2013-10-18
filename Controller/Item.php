@@ -30,7 +30,7 @@ class Controller_Item extends Controller_Abstract
 		require_once 'lib/vendor/jpgraph/jpgraph_line.php';
 		require_once 'lib/vendor/jpgraph/jpgraph_bar.php';
 		$db = Application::DB();
-		$db->registerLogger(Application::getInstance()->getLogger());
+
 		$item = new Item($db);
 		$item->initById($this->getRequestVar('item'));
 
@@ -42,7 +42,7 @@ class Controller_Item extends Controller_Abstract
 				STDDEV(buyout/quantity) AS Stdev,
 				SUM(buyout/quantity)/COUNT(a.id) AS Schnitt,
 				item.link,item.name,
-				date_format(lastseen, '%m-%d') as Datum
+				date_format(lastseen, '%a %m-%d') as Datum
 
 			FROM auctions a
 			LEFT JOIN item ON (item.id=a.itemid)
@@ -68,26 +68,34 @@ class Controller_Item extends Controller_Abstract
 		}
 		Application::getInstance()->getLogger()->info("MinMaxData: ".json_encode($minMaxData));
 		Application::getInstance()->getLogger()->info("xData: ".json_encode($xData));
-		$graph1 = new Graph(600, 250, "auto");
+		$graph1 = new Graph(800, 350, "auto");
+		$graph1->img->SetMargin(40,50,20,70);
 		$graph1->SetScale("textlin");
-		$plotVol = new BarPlot($volumeData);
-		$plotVol->SetColor('green');
-		$graph1->Add($plotVol);
+		$graph1->SetY2Scale('lin');
+		$graph1->title->Set("Min/Max Preis");
+		$graph1->xaxis->title->Set("Datum");
+		$graph1->xaxis->SetLabelAngle(90);
+		$graph1->yaxis->title->Set("Preis");
+		$graph1->y2axis->title->Set("Anzahl");
+		$graph1->y2axis->title->SetMargin(50);
 		$plot = new ErrorPlot($minMaxData);
 		$graph1->Add($plot);
 		$plot = new LinePlot($schnittData);
 		$plot->SetLineWeight(2);
 		$plot->SetColor("indigodye");
 		$graph1->Add($plot);
-		$graph1->title->Set("Min/Max Preis");
-		$graph1->xaxis->title->Set("Datum");
-		$graph1->yaxis->title->Set("Preis");
+		$plotVol = new BarPlot($volumeData);
+		$plotVol->SetColor('green');
+		$graph1->AddY2($plotVol);
+		//$graph1->ynaxis[0]->SetColor('green');
 		$graph1->xaxis->setTickLabels($xData);
 
+		ob_start();
 		$graph1->Stroke();
-		exit;
+		$img = ob_get_clean();
 		$this->enableLayout(false);
-		$this->assign("data", $data);
+		$this->enableView(false);
+		return $img;
 	}
 }
 

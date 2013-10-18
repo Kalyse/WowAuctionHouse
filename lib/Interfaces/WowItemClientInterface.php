@@ -1,8 +1,9 @@
 <?php
 
 /**
- * @author lamy
+ * TODO
  *
+ * @author lamy
  */
 interface WowItemClientInterface
 {

@@ -7,13 +7,14 @@ spl_autoload_register();
 // Autoload Zend classes
 require_once 'Zend/Loader/Autoloader.php';
 $loader = Zend_Loader_Autoloader::getInstance();
-$loader->pushAutoloader("MyAutoloader");
+$loader->pushAutoloader("appAutoloader");
 
-function MyAutoloader( $class)
+function appAutoloader( $class)
 {
 	$includePath = __DIR__.'/lib/mvc/:'.
 			__DIR__.'/lib/classes/:'.
 			__DIR__."/:".
+			__DIR__."/Model/:".
 			__DIR__."/lib/vendor/";
 			/*":".implode(":", glob(__DIR__."/lib/vendor/*", GLOB_ONLYDIR))*/
 	//echo "Look for $class in $includePath<br/>\n";
@@ -22,19 +23,17 @@ function MyAutoloader( $class)
 
 	foreach( explode( ':', $includePath) as $basePath) {
 		if( file_exists($basePath.$classPath.'.php')) {
-			include $basePath.$classPath.'.php';
-			return;
+			require_once $basePath.$classPath.'.php';
+			break;
 		} elseif( file_exists($basePath.$classNoNamespace.'.php')) {
-			include $basePath.$classNoNamespace.'.php';
-			return;
+			require_once $basePath.$classNoNamespace.'.php';
+			break;
 		}
 	}
-	return;
 }
 
-date_default_timezone_set("Europe/Berlin");
-
 $Application = new Application(__DIR__);
+$Application->initPhp();
 $Application->initDb();
 $Application->registerLogger(new Logger( new Logger_Logfile("/tmp/auctionhouse.log"), LoggerInterface::DEBUG, $Application->getConfig('logging')));
 $Application->getLogger()->debug(json_encode($Application->getConfig('logging')));

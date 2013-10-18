@@ -1,8 +1,9 @@
 <?php
 
 /**
- * @author lamy
+ * Layout implementation using Twig
  *
+ * @author lamy
  */
 class Layout_Twig extends Layout_Abstract
 {

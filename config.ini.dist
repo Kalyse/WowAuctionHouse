@@ -1,6 +1,6 @@
 dbname=wow
-dbuser=root
-dbpass=fun4free
+dbuser=XXX
+dbpass=XXX
 dbhost=127.0.0.1
 
 [debug]

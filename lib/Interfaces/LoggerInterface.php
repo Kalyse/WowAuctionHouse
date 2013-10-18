@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Logging made easy
+ */
 interface LoggerInterface
 {
 	const DEBUG		= 1;

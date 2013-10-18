@@ -52,10 +52,11 @@ class MvcApplication extends Application {
 	{
 		$this->logger->debug("run");
 		$route = $this->router->route( $this->request);
-		$this->layout->View = $this->runRoute($route);
+		$result = $this->runRoute($route);
 		if(!$this->controller->isLayoutEnabled()) {
-			return $this->layout->View;
+			return $result;
 		}
+		$this->layout->View = $result;
 		return $this->layout->render();
 	}
 
@@ -65,7 +66,7 @@ class MvcApplication extends Application {
 	 * @throws Exception_404
 	 * @return string
 	 */
-	protected function runRoute( $route)
+	protected function runRoute( Router_Route $route)
 	{
 		try {
 			$this->controller = Controller_Abstract::factory($route, $this->layout, $this->view, $this->request);
@@ -80,13 +81,16 @@ class MvcApplication extends Application {
 			return $this->exceptionPage($ex);
 		}
 		try {
+			Application::getInstance()->getLogger()->info("Running ".$route);
 			ob_start();
 			$actionOutput = $this->controller->$actionMethod();
 			$actionOutput2 = ob_get_clean();
 			if( $this->controller->isViewEnabled()) {
 				$actionOutput = $this->view->render();
+			} else {
 			}
 		} catch(Exception $ex) {
+			Application::getInstance()->getLogger()->info("Exception in ".__METHOD__);
 			return $this->exceptionPage( $ex);
 		}
 		return $actionOutput;

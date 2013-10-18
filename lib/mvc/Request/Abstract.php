@@ -1,4 +1,7 @@
 <?php
+/**
+ * Manage request variables
+ */
 abstract class Request_Abstract {
 	protected $vars = array();
 
@@ -9,30 +12,31 @@ abstract class Request_Abstract {
 
 	/**
 	 * Initialize request storage
-     * @param array
+	 *
+	 * @note implementor would get it's data from superglobal
 	 * @return boolean
 	 */
-	abstract public function init( $requestData);
+	abstract public function init();
 
 	/**
 	 * Get initialized request object based on SAPI
-	 * @param mixed $requestData
+	 *
 	 * @throws Exception
-     * @return Request_Abstract
+	 * @return Request_Abstract
 	 */
-	static public function factory( $requestData)
+	static public function factory()
 	{
 		switch( php_sapi_name())
 		{
 			case "apache2handler":
 				$result = new Request_Http();
-				$result->init( null);
+				$result->init();
 				break;
 
 			case "cli":
 				$result = new Request_Cli();
-				$result->init( $_SERVER);
-                break;
+				$result->init();
+				break;
 
 			default:
 				throw new Exception("Dont know how to handle SAPI '".php_sapi_name()."'");

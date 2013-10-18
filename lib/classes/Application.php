@@ -58,6 +58,17 @@ class Application {
 
 
 	/**
+	 * Configure PHP interpreter from [php] config section
+	 */
+	public function initPhp()
+	{
+		$phpConfig = $this->getConfig('php');
+		foreach( $phpConfig as $strKey=>$mxValue) {
+			ini_set($strKey, $mxValue);
+		}
+	}
+
+	/**
 	 * Sets the DB class to use and initializes it
 	 * @param string $class
 	 * @throws Exception
@@ -82,9 +93,9 @@ class Application {
 	/**
 	 * @return DBInterface
 	 */
-	static public function Db()
+	static public function db()
 	{
-		return static::getInstance()->getDB();
+		return static::getInstance()->getDb();
 	}
 
 
@@ -139,6 +150,7 @@ class Application {
 	public function registerLogger($logger)
 	{
 		$this->logger = $logger;
+		$this->getDb()->registerLogger($logger);
 	}
 
 	/**

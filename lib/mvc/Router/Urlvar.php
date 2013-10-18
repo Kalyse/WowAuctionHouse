@@ -1,7 +1,7 @@
 <?php
 
 /**
- * ROute by URL variable
+ * Route by URL variable
  *
  * @author TLamy
  */
@@ -31,7 +31,7 @@ class Router_Urlvar
 			default:
 				throw new Exception_404( "Malformed route variable '$doVar'");
 		}
-		throw new Exception_404( "Unable to get route to $doVar");
+		/* not reached */
 		return null;
 	}
 }

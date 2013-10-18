@@ -39,6 +39,11 @@ class Router_Route {
 	{
 		return $this->action ? $this->action : "index";
 	}
+
+	public function __toString()
+	{
+		return $this->getController()."-".$this->getAction();
+	}
 }
 
 ?>

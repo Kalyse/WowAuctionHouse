@@ -1,4 +1,7 @@
 <?php
+/**
+ * View implementation using Twig
+ */
 class View_Twig
 		extends View_Abstract
 {

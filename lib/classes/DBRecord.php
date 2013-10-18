@@ -2,6 +2,8 @@
 
 /**
  * Table gateway
+ *
+ * TODO: Change "_" variable prefixes to something else
  */
 class DBRecord
 {
@@ -37,7 +39,7 @@ class DBRecord
 
 	public function load($pkVal)
 	{
-		$this->_reset();
+		$this->reset();
 		$this->_vars[$this->_pk] = $pkVal;
 		$this->_loaded = false;
 		if(!$this->_selectStmt->execute(array($pkVal))) {
@@ -58,7 +60,7 @@ class DBRecord
 		return true;
 	}
 
-	private function _reset()
+	private function reset()
 	{
 		$this->_vars = array_fill_keys( array_merge(array($this->_pk), $this->_cols), null);
 		$this->_changed = array();
@@ -123,7 +125,6 @@ class DBRecord
 			$sql = "INSERT INTO `".$this->_table."` (".implode(",", array_keys($data)).") VALUES (".implode(",", $data).")";
 			echo $sql."\n";
 			$res = $this->_db->exec($sql);
-			var_dump($res);
 			return $res;
 		}
 		return null;

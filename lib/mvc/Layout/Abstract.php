@@ -1,8 +1,9 @@
 <?php
 
 /**
- * @author lamy
+ * Abstract Layout
  *
+ * @author lamy
  */
 abstract class Layout_Abstract extends View_Abstract
 {
