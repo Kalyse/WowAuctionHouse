@@ -63,8 +63,12 @@ class Application {
 	public function initPhp()
 	{
 		$phpConfig = $this->getConfig('php');
-		foreach( $phpConfig as $strKey=>$mxValue) {
-			ini_set($strKey, $mxValue);
+		if( is_array( $phpConfig)) {
+			foreach( $phpConfig as $strKey=>$mxValue) {
+				ini_set($strKey, $mxValue);
+			}
+		} else {
+			throw new Exception("config is ".gettype( $phpConfig).": ".print_r($phpConfig, true));
 		}
 	}
 
@@ -85,7 +89,7 @@ class Application {
 			throw new Exception("Check db config");
 		}
 		$this->db = new $class($dbHost, $dbUser, $dbPass, $dbName);
-
+		$this->db->registerLogger($this->logger);
 		return $this->db;
 	}
 
@@ -133,7 +137,7 @@ class Application {
 		if(!file_exists($this->configPath)) {
 			throw new Exception("Cannot read config from ".$this->configPath);
 		}
-		$this->config = parse_ini_file($this->configPath);
+		$this->config = parse_ini_file($this->configPath, true);
 		$this->configInitialized = true;
 	}
 

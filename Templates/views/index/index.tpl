@@ -1,3 +1,6 @@
+<script type="text/javascript" src="http://static.wowhead.com/widgets/power.js"></script>
+<script>var wowhead_tooltips = { "colorlinks": true, "iconizelinks": true, "renamelinks": true }</script>
+
 <table>
 <thead>
 <tr>

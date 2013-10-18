@@ -14,7 +14,7 @@ class DB
 	/**
 	 * @var LoggerInterface
 	 */
-	protected $logger;
+	protected $logger = null;
 	/*
 	static private $_instance = null;
 
@@ -38,7 +38,7 @@ class DB
 		$this->exec("SET names utf8");
 	}
 
-	public function registerLogger( LoggerInterface $logger)
+	public function registerLogger( LoggerInterface $logger = null)
 	{
 		$this->logger = $logger;
 	}

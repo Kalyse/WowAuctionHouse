@@ -1,1 +1,4 @@
 config.ini
+/.settings
+/.buildpath
+/.gitignore

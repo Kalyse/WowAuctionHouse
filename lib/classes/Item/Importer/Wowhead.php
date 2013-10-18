@@ -1,11 +1,9 @@
 <?php
 
-require_once ('lib/Interfaces/WowItemClientInterface.php');
-
 /**
  * Import item data from wowhead
  */
-class Item_Importer_Wowhead implements WowItemClientInterface
+class Item_Importer_Wowhead implements Item_Importer_Interface
 {
 	/**
 	 * @var Item

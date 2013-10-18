@@ -11,6 +11,8 @@ interface DBInterface {
 	 * @return void
 	 */
 	public function bindObject( PDOStatement $stmt, stdClass $object);
+
+	//public function registerLogger( $logger);
 }
 
 ?>
